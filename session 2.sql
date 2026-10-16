@@ -1,54 +1,50 @@
-# 1. Create MusicPlaylist table and insert 5 songs
-CREATE TABLE MusicPlaylist (
+# 2. Create the foodie_app database
+CREATE DATABASE foodie_app;
+
+USE foodie_app;
+
+SELECT DATABASE();
+
+# 3. Create the restaurants table
+CREATE TABLE restaurants (
     id INT PRIMARY KEY,
-    song_name VARCHAR(100),
-    artist VARCHAR(100),
-    genre VARCHAR(50),
-    duration INT
+    name VARCHAR(100),
+    cuisine VARCHAR(50),
+    rating DECIMAL(2,1),
+    location VARCHAR(100)
 );
 
-CREATE TABLE FoodOrders (
-    id INT PRIMARY KEY,
-    restaurant VARCHAR(100),
-    food_item VARCHAR(100),
-    order_date DATE
+INSERT INTO restaurants
+(id, name, cuisine, rating, location)
+VALUES
+(1, 'Dominos', 'Italian', 4.2, 'Ahmedabad'),
+(2, 'Honest', 'Indian', 4.5, 'Surat'),
+(3, 'Pizza Hut', 'Italian', 4.1, 'Mumbai');
+
+SELECT * FROM restaurants;
+
+# 4. Create the users table
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    phone_number VARCHAR(20) UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO MusicPlaylist (id, song_name, artist, genre, duration)
+INSERT INTO users
+(user_id, username, email, phone_number)
 VALUES
-(1, 'Kesariya', 'Arijit Singh', 'Romantic', 268),
-(2, 'Tum Hi Ho', 'Arijit Singh', 'Romantic', 262),
-(3, 'Apna Bana Le', 'Arijit Singh', 'Romantic', 261),
-(4, 'Ilahi', 'Arijit Singh', 'Travel', 230),
-(5, 'Heeriye', 'Jasleen Royal', 'Pop', 194);
+(1, 'Amit', 'amit@example.com', '+919876543210'),
+(2, 'Priya', 'priya@example.com', '+919876543211');
 
-INSERT INTO FoodOrders (id, restaurant, food_item, order_date)
-VALUES
-(1, 'Dominos', 'Pizza', '2026-10-01'),
-(2, 'Zomato Kitchen', 'Burger', '2026-10-02'),
-(3, 'Dominos', 'Garlic Bread', '2026-10-03'),
-(4, 'McDonalds', 'Burger', '2026-10-04'),
-(5, 'Pizza Hut', 'Pizza', '2026-10-05');
+SELECT * FROM users;
 
-SELECT * FROM FoodOrders;
+# 5. Intentionally create and fix a SQL error
+CREATE TABLE test_restaurants (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    cuisine VARCHAR(50)
+);
 
-SELECT * FROM MusicPlaylist;
-
-# 2. Display only the first 3 songs
-SELECT song_name, artist
-FROM MusicPlaylist
-LIMIT 3;
-
-# 3. Display unique restaurant names
-SELECT DISTINCT restaurant
-FROM FoodOrders;
-
-# 4. Use column aliases
-SELECT food_item AS 'Dish',
-       order_date AS 'Date Ordered'
-FROM FoodOrders;
-
-# 5. Fix the DISTINCT and LIMIT query
-SELECT DISTINCT food_item, restaurant
-FROM FoodOrders
-LIMIT 2;
+DESCRIBE test_restaurants;
